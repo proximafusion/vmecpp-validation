@@ -1,0 +1,15 @@
+# IntelliJ IDEA files
+.idea/
+*.iml
+
+# VSCode files
+.vscode/
+
+# Python venv
+venv/
+
+# Python cache
+__pycache__/
+
+# Validation results
+vnvresults*

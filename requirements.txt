@@ -1,0 +1,7 @@
+docker
+jaxtyping
+numba
+numpy
+pydantic
+rich
+vmecpp @ git+ssh://git@github.com/proximafusion/vmecpp.git
