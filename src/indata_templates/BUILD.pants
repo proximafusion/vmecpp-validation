@@ -1,0 +1,4 @@
+files(
+    name="indata_templates",
+    sources=["*.txt"],
+)
