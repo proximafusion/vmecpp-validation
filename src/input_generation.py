@@ -12,6 +12,9 @@ from src._utils import log_error, log_info
 
 logger = logging.getLogger("validate_vmec.input_generation")
 
+# Location for input data (indata templates and mgrid files)
+DATA_DIR = Path(__file__).parent.parent / "data"
+
 # Mapping (case_name, beta) -> pres_scale
 PRES_SCALES_PER_BETA: dict[tuple[str, int], float] = {
     ("cm_a", 1): 1.5e3,
@@ -66,63 +69,6 @@ EXCLUDED_CONFIGURATIONS = (
 )
 
 
-def make_mgrid_file(
-    case_name: str, target_folder: Path, cache_dir: Path | None
-) -> None:
-    mgrid_fname = f"mgrid_{case_name}.nc"
-    output_mgrid_file = target_folder / case_name / mgrid_fname
-
-    if output_mgrid_file.exists():
-        return  # mgrid file already there for this case name
-
-    if cache_dir is None or not (cache_dir / case_name / mgrid_fname).exists():
-        mgrid_exe = shutil.which("mgrid")
-        if mgrid_exe is None:
-            msg = "Could not find 'mgrid' executable in PATH."
-            log_error(msg, logger)
-            raise RuntimeError(msg)
-
-        coils_file = Path(__file__).parent / "coils" / f"coils.{case_name}"
-
-        status = subprocess.run(
-            [mgrid_exe, coils_file],
-            cwd=coils_file.parent,
-            capture_output=True,
-        )
-        if status.returncode != 0 or "error" in status.stderr.decode().lower():
-            msg = (
-                f"There was an issue running command '{mgrid_exe} {coils_file}'.\n"
-                f"stdout:\n{status.stdout}"
-                f"stderr:\n{status.stderr}"
-            )
-            log_error(msg, logger)
-            raise RuntimeError(msg)
-
-        if not (coils_file.parent / mgrid_fname).exists():
-            msg = (
-                f"Command '{mgrid_exe} {coils_file}' did not "
-                "produce file {mgrid_fname}.\n"
-            )
-            log_error(msg, logger)
-            raise RuntimeError(msg)
-
-        src_file = coils_file.parent / mgrid_fname
-        shutil.move(src_file, output_mgrid_file)
-        if not output_mgrid_file.exists():
-            msg = f"Failed to move '{src_file}' to '{output_mgrid_file}'.\n"
-            log_error(msg, logger)
-            raise RuntimeError(msg)
-
-        if cache_dir is not None:
-            cached_mgrid_file_path = cache_dir / case_name / mgrid_fname
-            cached_mgrid_file_path.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(src=output_mgrid_file, dst=cached_mgrid_file_path)
-    else:  # file already in the cache
-        log_info(f"Found file '{Path(case_name, mgrid_fname)}' in the cache", logger)
-        cached_mgrid_file_path = cache_dir / case_name / mgrid_fname
-        shutil.copyfile(src=cached_mgrid_file_path, dst=output_mgrid_file)
-
-
 def make_input(
     case_name: str,
     target_folder: Path,
@@ -155,7 +101,7 @@ def make_input(
             mpol = mn
             ntor = mpol
 
-        template_file = Path(__file__).parent / "indata_templates" / f"{case_name}.txt"
+        template_file = DATA_DIR / "indata_templates" / f"{case_name}.txt"
         with open(template_file) as f:
             template = f.read()
             if case_name == "cth_like":
@@ -178,10 +124,6 @@ def make_input(
     else:  # file already in cache
         log_info(f"Found file '{indata_path}' in the cache", logger)
         shutil.copyfile(src=cache_dir / indata_path, dst=output_fname)
-
-    # produce mgrid file (only free-boundary configurations)
-    if case_name in ["w7x", "ncsx", "cth_like"]:
-        make_mgrid_file(case_name, target_folder, cache_dir=cache_dir)
 
     return output_fname.absolute()
 
