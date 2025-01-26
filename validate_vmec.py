@@ -43,6 +43,7 @@ from src._utils import (
 )
 from src.compare_wout import compare_wout
 from src.input_generation import (
+    DATA_DIR,
     EXCLUDED_CONFIGURATIONS,
     make_input_configs,
     make_input_configs_for_short_run,
@@ -219,7 +220,7 @@ class ReferenceWOutComputeTask:
 
             # extract base conf name: input.w7x_beta0_mn5_ns25 -> w7x
             base_conf_name = conf_name_from_path(conf).split("_beta")[0]
-            mgrid_file = conf.parent / f"mgrid_{base_conf_name}.nc"
+            mgrid_file = DATA_DIR / "mgrid_files" / f"mgrid_{base_conf_name}.nc"
             if mgrid_file.exists():
                 tar.add(mgrid_file, arcname=mgrid_file.name)
 
@@ -675,7 +676,7 @@ def main() -> int:
 
     args = parse_args()
 
-    log_info("Generating configurations (VMEC input files and mgrid files)...", logger)
+    log_info("Generating configurations (VMEC input files)...", logger)
 
     if args.short:
         reference_confs = RefConfPaths(
