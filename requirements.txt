@@ -1,7 +1,7 @@
-docker
-jaxtyping
-numba
-numpy
-pydantic
-rich
-vmecpp @ git+ssh://git@github.com/proximafusion/vmecpp.git
+docker==7.1.0
+jaxtyping==0.2.34
+numba==0.60.0
+numpy==1.26.0
+pydantic==2.10.3
+rich==13.7.0
+vmecpp @ git+ssh://git@github.com/proximafusion/vmecpp.git@v0.0.1
