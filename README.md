@@ -9,6 +9,7 @@ sudo apt install python3-venv
 ```
 sudo apt-get install build-essential cmake libnetcdf-dev liblapacke-dev libopenmpi-dev libeigen3-dev nlohmann-json3-dev libhdf5-dev
 ```
+* [git-lfs](https://git-lfs.com/), when working with free-boundary scenarios (currently w7x, ncsx and cth_like)
 
 ## Installation
 
