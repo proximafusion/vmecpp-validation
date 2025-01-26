@@ -9,7 +9,6 @@ import contextlib
 import io
 import itertools
 import logging
-import multiprocessing
 import os
 import re
 import shutil
@@ -47,6 +46,7 @@ from src.input_generation import (
 )
 from src.pdf_report import make_pdf_report
 import vmecpp
+from vmecpp.cpp.third_party.indata2json.indata_to_json import indata_to_json
 
 logger = logging.getLogger("validate_vmec")
 console = rich.console.Console()
@@ -156,52 +156,19 @@ def make_vmecpp_confs(reference_confs: RefConfPaths) -> VmecppConfPaths:
     Return the CONFIGNAME.json paths corresponding to each
     input.CONFIGNAME in reference_confs, in the same order.
 
-    The `indata2json` binary is expected to be present in directory
-    '../../third_party/indata2json/indata2json' relative to this script.
     """
-    i2j = Path(__file__).parent / "third_party" / "indata2json" / "indata2json"
-    if not i2j.exists():
-        msg = (
-            "Could not find 'indata2json' at the expected location "
-            f"'{i2j.absolute()}'."
-        )
-        log_error(msg, logger)
-        raise RuntimeError(msg)
-    is_executable = os.access(i2j, os.X_OK)
-    if not is_executable:
-        msg = (
-            f"Cannot execute '{i2j.absolute()}': "
-            "make sure you have correct permissions."
-        )
-        log_error(msg, logger)
-        raise RuntimeError(msg)
-
     all_vmecpp_confs = VmecppConfPaths([])
     for conf in reference_confs:
-        conf_name = conf_name_from_path(conf)
-        vmecpp_conf = conf.with_name(conf_name).with_suffix(".json")
+        original_cwd = Path.cwd()
+        conf_dir = conf.parent
 
-        vmecpp_conf.parent.mkdir(exist_ok=True)
-        status = subprocess.run(
-            # the --mgrid_folder option guarantees the mgrid_file path is the (absolute)
-            # path to the directory where the input conf is stored, so we can call
-            # VMEC++ with that input without cd'ing into the directory.
-            [i2j, "--mgrid_folder", conf.parent, conf],
-            cwd=vmecpp_conf.parent,
-            capture_output=True,
-        )
-        # indata2json always returns 0 -> check if output exists to determine success.
-        if not vmecpp_conf.exists():
-            msg = (
-                f"There was an error while running `{i2j} {conf}` "
-                f"from directory {vmecpp_conf.parent}:\n\t"
-                f"{status.stdout}\n"  # indata2json prints error messages to stdout
-                f"Expected output file '{vmecpp_conf}' is not present."
-            )
-            log_error(msg, logger)
-            raise RuntimeError(msg)
+        # indata_to_json writes its output to the current working directory,
+        # so we change there
+        os.chdir(conf_dir)
+        vmecpp_conf = indata_to_json(conf)
+        os.chdir(original_cwd)
 
-        all_vmecpp_confs.append(vmecpp_conf)
+        all_vmecpp_confs.append(conf_dir / vmecpp_conf)
 
     return all_vmecpp_confs
 
