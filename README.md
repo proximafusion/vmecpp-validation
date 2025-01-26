@@ -36,3 +36,5 @@ python -m validate_vmec
 ```
 
 Results will be in the repo root, in a directory with the prefix `vnvresults`.
+
+TODO(viska) Add more background information and hints to interpret the results

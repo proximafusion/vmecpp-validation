@@ -1,7 +1,6 @@
 # /usr/bin/env python
 #
 # The driver for Proxima's VMEC++ Verification and Validation (V&V) procedure.
-# Find the related spec at https://docs.google.com/document/d/1lfF_krpIQIFYQ6a5FH1odNd8PB1x5bH6KOslYy_Y8Dw/edit?usp=sharing
 # Get usage information for this program by running `python validate_vmec.py --help`.
 
 import argparse
@@ -60,9 +59,6 @@ VmecppWoutPaths = NewType("VmecppWoutPaths", list[Path])
 
 def parse_args() -> argparse.Namespace:
     usage = """
-    You might have to run `pants --tag=external_build run ::` to generate
-    VMEC++'s Python bindings before running this script.
-
     RESULTS
     Besides producing human-readable output at the command line, this script
     creates a directory called 'vnvresults_YYYYMMDD_HHmm/' in the
