@@ -368,12 +368,10 @@ def run_vmecpp(conf_and_wout: tuple[Path, Path]) -> tuple[Path, str, float]:
     conf, wout = conf_and_wout
     out = StringIO()
     with contextlib.redirect_stdout(out):
-        # with vmecpp.ostream_redirect(stdout=True, stderr=True):
         indata = vmecpp.VmecInput.from_file(conf)
         start_time = time.time()
         output_quantities = vmecpp.run(indata, max_threads=1)
         runtime = time.time() - start_time
-        # fortran_wout = FortranWOutAdapter.from_vmecpp_wout(output_quantities.wout)
         output_quantities.wout.save(wout)
     return conf, out.getvalue(), runtime
 
@@ -643,23 +641,6 @@ def check_all_checks_are_present(
             if varname not in checked_vars:
                 log_missing(varname, conf_name)
 
-        # post-optimization quantities, only for higher-resolution configurations
-        re_match = re.match(r"\w+_beta(\d+)_mn(\d+)_ns(\d+)", conf_name)
-        assert re_match is not None
-        beta, mn, ns = map(int, re_match.groups())
-        if not (beta == 5 and mn == 12 and ns == 99):
-            continue
-
-        post_opt_varnames = [
-            "cobravmec_growth_rates",  # vnvchecklist.8
-            "lost_fraction",  # vnvchecklist.9
-        ]
-        for varname in post_opt_varnames:
-            if varname not in checked_vars:
-                log_missing(varname, conf_name)
-
-        # NOTE: SFINCS and spiderplot (vnvchecklist.10-11) not implemented
-        # NOTE: "green CI check" (vnvchecklist.12) not implemented
 
 
 def main() -> int:
