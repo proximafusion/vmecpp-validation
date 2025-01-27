@@ -1,3 +1,1 @@
-data/mgrid_files/mgrid_ncsx.nc filter=lfs diff=lfs merge=lfs -text
-data/mgrid_files/mgrid_w7x.nc filter=lfs diff=lfs merge=lfs -text
-data/mgrid_files/mgrid_cth_like.nc filter=lfs diff=lfs merge=lfs -text
+*.nc filter=lfs diff=lfs merge=lfs -text
