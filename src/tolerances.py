@@ -74,9 +74,6 @@ _TOLERANCES: dict[str, float | tuple[float, float]] = {
     "bsubsmns": (1.0e-6, 1.0e-4),  # cth_like_beta0_mn12_ns25
     "bsupumnc": (1.0e-6, 2.0e-3),  # cth_like_beta0_mn12_ns25
     "bsupvmnc": (1.0e-7, 2.0e-5),
-    # starfinder objectives
-    "r_axis_at_phi_0": 1.0e-3,
-    "cobravmec_growth_rates": (1.0e-6, 1.0e-4),
     # cth_like_beta0_mn12_ns51
     "vmec_max_normalized_geodesic_curvature": (1.0e-5, 5.0e-3),
     # cth_like_beta0_mn12_ns51
@@ -92,9 +89,6 @@ _TOLERANCES: dict[str, float | tuple[float, float]] = {
     "txport.g11": (1.0e-5, 5.0e-4),
     "qi.profile": (1.0e-9, 2.0e-6),
     "bmnc_b": (1.0e-7, 5.0e-5),
-    # Stage one checks
-    "stage_one_objective_value": 1.0e-2,
-    "number_of_function_evaluations": 1.5,  # we are ok with a 50% fluctuation
     # realspace geometry and magnetic field components
     "flux_surface_geometry_r": (1.0e-7, 5.0e-5),  # cth_like_beta0_mn12_ns51
     "flux_surface_geometry_z": (1.0e-7, 5.0e-5),  # cth_like_beta0_mn12_ns51
@@ -105,8 +99,6 @@ _TOLERANCES: dict[str, float | tuple[float, float]] = {
     "rmax_surf": (1.0e-12, 5.0e-5),  # cth_like_beta0_mn12_ns25
     "rmin_surf": (1.0e-12, 1.0e-5),  # cth_like_beta0_mn12_ns25
     "zmax_surf": (1.0e-12, 1.0e-4),  # cth_like_beta0_mn12_ns51
-    # post-optimization
-    "lost_fraction": 5.0e-2,
 }
 
 
