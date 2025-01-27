@@ -1,5 +1,7 @@
 # VMEC++ Validation
 
+Tested on Ubuntu 22.04.
+
 ## Pre-requisites:
 * python with venv, tested with python3.10
 ```
