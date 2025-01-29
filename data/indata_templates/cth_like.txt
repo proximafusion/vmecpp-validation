@@ -1,7 +1,7 @@
 &INDATA
 
 ! VMEC execution parameters.
-MGRID_FILE = 'mgrid_cth_like.nc'
+MGRID_FILE = '{mgrid_file}'
 LFREEB = T
 DELT = 0.7
 TCON0 = 2.0

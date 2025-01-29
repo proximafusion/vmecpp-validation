@@ -1,6 +1,5 @@
 &INDATA
   ! DSHAPE Tokamak from Hirshman and Whitson 1983
-  MGRID_FILE = 'none'
   LFREEB =  F
   LASYM =   F
   DELT =    1.0

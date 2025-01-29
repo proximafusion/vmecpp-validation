@@ -80,6 +80,7 @@ def make_input(
 ) -> Path:
     indata_path = Path(case_name, f"input.{case_name}_beta{beta}_mn{mn}_ns{ns}")
     output_fname = target_folder / indata_path
+    mgrid_file = DATA_DIR / "mgrid_files" / f"mgrid_{case_name}.nc"
 
     if cache_dir is None or not (cache_dir / indata_path).exists():
         # produce indata file
@@ -107,11 +108,20 @@ def make_input(
             if case_name == "cth_like":
                 ftol = 1.0e-11 if ns > 50 else 1.0e-12
                 config = template.format(
-                    ns=ns, mpol=mpol, ntor=ntor, pres_scale=pres_scale, ftol=ftol
+                    ns=ns,
+                    mpol=mpol,
+                    ntor=ntor,
+                    pres_scale=pres_scale,
+                    ftol=ftol,
+                    mgrid_file=mgrid_file,
                 )
             else:
                 config = template.format(
-                    ns=ns, mpol=mpol, ntor=ntor, pres_scale=pres_scale
+                    ns=ns,
+                    mpol=mpol,
+                    ntor=ntor,
+                    pres_scale=pres_scale,
+                    mgrid_file=mgrid_file,
                 )
 
         with open(output_fname, "w") as f:
