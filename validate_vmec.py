@@ -49,7 +49,7 @@ from src.input_generation import (
 )
 from src.pdf_report import make_pdf_report
 import vmecpp
-from vmecpp.cpp.third_party.indata2json.indata_to_json import indata_to_json
+from vmecpp._util import indata_to_json
 
 logger = logging.getLogger("validate_vmec")
 console = rich.console.Console()
