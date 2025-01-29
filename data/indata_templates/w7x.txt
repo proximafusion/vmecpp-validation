@@ -36,7 +36,7 @@
 
 ! Vacuum Fields.
   LFREEB = T
-  MGRID_FILE = 'mgrid_w7x.nc'
+  MGRID_FILE = '{mgrid_file}'
   EXTCUR( 1) =  13.6e3 ! AAE10_SC (NPC1)
   EXTCUR( 2) =  13.6e3 ! AAE29_SC (NPC2)
   EXTCUR( 3) =  13.6e3 ! AAE38_SC (NPC3)
