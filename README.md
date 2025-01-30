@@ -4,6 +4,8 @@
 
 This project serves to validate [VMEC++](https://github.com/proximafusion/vmecpp), a Python-friendly, from-scratch reimplementation in C++ of the Variational Moments Equilibrium Code (VMEC), a free-boundary ideal-MHD equilibrium solver for stellarators and tokamaks against a reference VMEC implementation.
 
+We compare the contents of the "wout" file, VMEC's standard output format, ensuring the values produced by VMEC++ match those of the reference implementation within test tolerances. 
+
 ### Reference implementation
 The reference implementation we compare against is Serial VMEC 8.52 from tag `v251` of [https://github.com/PrincetonUniversity/STELLOPT](https://github.com/PrincetonUniversity/STELLOPT) (sub-directory VMEC2000) with the following patches specified below for direct comparison with standalone VMEC++:
 * `lnyquist` must be set to `.TRUE.` in `wrout.f`
@@ -23,7 +25,7 @@ We use the following input configurations:
 * Configurations probing the region of interest for Proxima:
     * CM-A
     * CM-B
-* Matt’s preciseQA and QH configurations, to probe other classes of stellarator symmetries.
+* Matt Landreman’s preciseQA and QH configurations, to probe other classes of stellarator symmetries.
     * preciseQA (take the “20211102-01-precise_quasisymmetry_zenodo/configurations/new_QA_well/input.20210728-01-010_QA_nfp2_A6_magwell_weight_1.00e+01_rel_step_3.00e-06_centered” configuration in this [Zenodo folder](https://zenodo.org/records/5645413))
     * preciseQH (take the “20211102-01-precise_quasisymmetry_zenodo/configurations/new_QH_well/input.20210728-01-026_QH_nfp4_A8_magwell” configuration in this [Zenodo folder](https://zenodo.org/records/5645413))
 * Some existing machines, as it is likely that we can obtain or have equilibria computed by other codes to be possibly used for benchmarking.
@@ -63,7 +65,7 @@ For each input configuration, the following checks must pass:
 ### Error tolerance
 
 Unless specified otherwise, quantities are checked against the IsCloseRelAbs metric (see Gill, Murray and Wright, "Practical Optimization" (1984), sec. 2.1.1, lower formula on p. 7).
-Unless explicitly specified in this document, our implementation of the V&V checks acts as the specification in regards to what exact tolerances are used for each quantity: see `src/tolerances.py`.
+Unless explicitly specified in this document, our implementation acts as the specification in regards to what exact tolerances are used for each quantity: see `src/tolerances.py`.
 
 As a rule of thumb, deviations from the Reference should be smaller than 1e-6 in the IsCloseRelAbs metric.
 
@@ -106,6 +108,4 @@ Run the validation:
 python -m validate_vmec
 ```
 
-Results will be in the repo root, in a directory with the prefix `vnvresults`.
-
-TODO(viska) Add more background information and hints to interpret the results
+Results will be saved in the current working durectory, in a subdirectory with the prefix `vnvresults`.
