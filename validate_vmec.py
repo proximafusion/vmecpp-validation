@@ -163,7 +163,7 @@ def make_vmecpp_confs(reference_confs: RefConfPaths) -> VmecppConfPaths:
         # indata_to_json writes its output to the current working directory,
         # so we change there
         os.chdir(conf_dir)
-        vmecpp_conf = indata_to_json(conf)
+        vmecpp_conf = indata_to_json(conf, use_mgrid_file_absolute_path=True)
         os.chdir(original_cwd)
 
         all_vmecpp_confs.append(conf_dir / vmecpp_conf)
