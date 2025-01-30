@@ -80,7 +80,7 @@ def make_input(
 ) -> Path:
     indata_path = Path(case_name, f"input.{case_name}_beta{beta}_mn{mn}_ns{ns}")
     output_fname = target_folder / indata_path
-    mgrid_file = DATA_DIR / "mgrid_files" / f"mgrid_{case_name}.nc"
+    mgrid_file = f"mgrid_{case_name}.nc"
 
     if cache_dir is None or not (cache_dir / indata_path).exists():
         # produce indata file
@@ -134,6 +134,11 @@ def make_input(
     else:  # file already in cache
         log_info(f"Found file '{indata_path}' in the cache", logger)
         shutil.copyfile(src=cache_dir / indata_path, dst=output_fname)
+
+    # copy mgrid file (only free-boundary configurations)
+    if case_name in ["w7x", "ncsx", "cth_like"]:
+        mgrid_file_name = DATA_DIR / "mgrid_files" / f"mgrid_{case_name}.nc"
+        shutil.copyfile(mgrid_file_name, target_folder / case_name / mgrid_file_name.name)
 
     return output_fname.absolute()
 
