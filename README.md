@@ -9,7 +9,7 @@ The reference implementation we compare against is Serial VMEC 8.52 from tag `v2
 * `lnyquist` must be set to `.TRUE.` in `wrout.f`
 * Parameter ordering when calling `analysum2` and `analysum2_par` must be fixed
 
-A Docker image that contains serial VMEC 8.52 with the patches specified above is available as a Docker image at [ghcr.io/proximafusion/vmec2000:latest](ghcr.io/proximafusion/vmec2000:latest) in order to also freeze all dependent libraries, compiler versions, etc.
+A Docker image that contains serial VMEC 8.52 with the patches specified above is available as a Docker image at [https://ghcr.io/proximafusion/vmec2000:latest](https://ghcr.io/proximafusion/vmec2000:latest) in order to also freeze all dependent libraries, compiler versions, etc.
 
 ### Input configurations
 
@@ -18,8 +18,8 @@ We run on 9 different plasma configurations with a 3-step parameter scan in beta
 #### Configurations
 
 We use the following input configurations:
-* DSHAPE, as in the original VMEC paper
-* HELIOTRON, as in the original VMEC paper
+* DSHAPE, as in the original VMEC paper, [Hirshman SP, Whitson JC. Steepest descent moment method for three-dimensional magnetohydrodynamic equilibria. (1983)](https://doi.org/10.1063/1.864116)
+* HELIOTRON, as in the original VMEC paper, [Hirshman SP, Whitson JC. Steepest descent moment method for three-dimensional magnetohydrodynamic equilibria. (1983)](https://doi.org/10.1063/1.864116)
 * Configurations probing the region of interest for Proxima:
     * CM-A
     * CM-B
