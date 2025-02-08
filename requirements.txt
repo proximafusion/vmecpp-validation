@@ -4,4 +4,5 @@ numba==0.60.0
 numpy==1.26.0
 pydantic==2.10.3
 rich==13.7.0
-vmecpp@git+https://github.com/proximafusion/vmecpp
+# TODO(eguiraud): switch back to trunk as soon as this branch is merged
+vmecpp@git+https://github.com/proximafusion/vmecpp@switch-submodules-to-https

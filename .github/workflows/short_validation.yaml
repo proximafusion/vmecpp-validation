@@ -1,0 +1,36 @@
+name: Run short version of VMEC++ validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+# Cancel currently running job if a new one comes along for the same branch or tag.
+# From https://stackoverflow.com/a/72408109.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  short-validation:
+    name: Run short VMEC++ validation
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install required packages for Ubuntu
+        run: |
+          # install VMEC++ deps
+          sudo apt-get update && sudo apt-get install build-essential cmake libnetcdf-dev liblapacke-dev libopenmpi-dev libeigen3-dev nlohmann-json3-dev libhdf5-dev
+      - name: Install Python requirements
+        run: |
+          python -m pip install -r requirements.txt
+      - name: Run short validation
+        run: |
+          python -m validate_vmec --short
+
