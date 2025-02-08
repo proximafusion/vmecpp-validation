@@ -689,12 +689,13 @@ def main() -> int:
     all_vnv_checks = VnvChecks.from_conf_paths(reference_confs)
 
     log_info("Comparing runtimes...", logger)
-    any_mismatch = check_runtimes(
+    status = check_runtimes(
         reference_confs,
         vmecpp_runtimes=vmecpp_runtimes,
         reference_runtimes=reference_runtimes,
         all_vnv_checks=all_vnv_checks,
     )
+    any_mismatch = True if status == Status.MISMATCH else False
     log_info("Finished comparing runtimes", logger)
 
     for vmecpp_wout, ref_wout in zip(vmecpp_wouts, reference_wouts):
