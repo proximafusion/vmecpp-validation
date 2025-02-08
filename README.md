@@ -6,6 +6,8 @@ This project serves to validate [VMEC++](https://github.com/proximafusion/vmecpp
 
 We compare the contents of the "wout" file, VMEC's standard output format, ensuring the values produced by VMEC++ match those of the reference implementation within test tolerances. 
 
+Please report any issues at https://github.com/proximafusion/vmecpp.
+
 ### Reference implementation
 The reference implementation we compare against is Serial VMEC 8.52 from tag `v251` of [https://github.com/PrincetonUniversity/STELLOPT](https://github.com/PrincetonUniversity/STELLOPT) (sub-directory VMEC2000) with the following patches specified below for direct comparison with standalone VMEC++:
 * `lnyquist` must be set to `.TRUE.` in `wrout.f`
