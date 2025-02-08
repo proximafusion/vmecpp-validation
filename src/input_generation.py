@@ -8,10 +8,9 @@ import itertools
 import logging
 import os
 import shutil
-import subprocess
 from pathlib import Path
 
-from src._utils import log_error, log_info
+from src._utils import log_info
 
 logger = logging.getLogger("validate_vmec.input_generation")
 
