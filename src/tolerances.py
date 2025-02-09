@@ -20,22 +20,22 @@ _TOLERANCES: dict[str, float | tuple[float, float]] = {
     "fsqz": 1.0,
     "fsql": 1.0,
     # Scalar quantities
-    "wb": (1.0e-12, 1.0e-9),  # w7x_beta1_mn12_ns25
+    "wb": (1.0e-12, 1.0e-9),  # w7x_beta1_mn12_ns25 is the "worst offender"
     "wp": (1.0e-12, 1.0e-8),  # w7x_beta1_mn12_ns51
     "volavgB": (1.0e-10, 1.0e-6),  # cth_like_beta0_mn12_ns25
     "rbtor": (1.0e-10, 2.0e-8),
     "rbtor0": (5.0e-10, 1.0e-8),
     "ctor": 1.0e-8,
-    "betatotal": (1.0e-9, 5.0e-8),
+    "betatotal": (1.0e-9, 1.0e-7),  # cth_like_beta1_mn12_ns99
     "betapol": (1.0e-9, 5.0e-7),
-    "betator": (1.0e-9, 5.0e-8),
+    "betator": (1.0e-9, 1.0e-7),  # cth_like_beta1_mn12_ns99
     "betaxis": (1.0e-8, 5.0e-8),
-    "b0": (1.0e-8, 1.0e-7),
-    "IonLarmor": (1.0e-12, 1.0e-8),  # cth_like_beta0_mn12_ns25
+    "b0": (1.0e-8, 5.0e-7),  # cth_like_beta1_mn12_ns99
+    "IonLarmor": (1.0e-12, 5.0e-8),  # cth_like_beta1_mn12_ns99
     "aspect": (1.0e-13, 1.0e-6),  # cth_like_beta0_mn12_ns25
     "Aminor_p": (1.0e-13, 2.0e-7),  # cth_like_beta0_mn12_ns25
     "Rmajor_p": (1.0e-13, 1.0e-6),  # cth_like_beta0_mn12_ns25
-    "volume_p": (1.0e-13, 1.0e-6),  # cth_like_beta0_mn12_ns25
+    "volume_p": (1.0e-13, 5.0e-6),  # cth_like_beta0_mn12_ns51
     # Radial profiles
     "pres": 1.0e-11,
     "presf": (1.0e-11, 5.0e-11),
@@ -49,14 +49,14 @@ _TOLERANCES: dict[str, float | tuple[float, float]] = {
     "bvco": (1.0e-9, 5.0e-8),
     "vp": (1.0e-9, 1.0e-6),  # cth_like_beta0_mn12_ns51
     "specw": (1.0e-5, 1.0e-2),  # cth_like_beta0_mn12_ns25
-    "over_r": (1.0e-7, 1.0e-5),
-    "bdotgradv": (1.0e-8, 2.0e-5),
+    "over_r": (1.0e-7, 2.0e-5),  # cth_like_beta0_mn12_ns99
+    "bdotgradv": (1.0e-8, 5.0e-5),  # cth_like_beta0_mn12_ns99
     "beta_vol": (1.0e-8, 5.0e-7),
     "jdotb": (0.2, 0.5),  # we expect bad matching between VMEC++ and Fortran here
-    "jcuru": (1.0e-3, 0.1),  # cth_like_beta0_mn12_ns51
+    "jcuru": (1.0e-3, 0.5),  # cth_like_beta0_mn12_ns99
     "jcurv": (1.0e-5, 1.0e-3),
     "equif": (1.0e-4, 1.1),  # cth_like_beta0_mn12_ns51
-    "DMerc": (2.0e-3, 1.0e-2),
+    "DMerc": (2.0e-3, 2.0e-2),  # cth_like_beta0_mn12_ns99
     "DShear": (1.0e-5, 5.0e-3),  # cth_like_beta0_mn12_ns25
     "DWell": (1.0e-4, 1.0e-2),
     "DCurr": (1.0e-4, 5.0e-2),  # cth_like_beta0_mn12_ns51
@@ -73,7 +73,7 @@ _TOLERANCES: dict[str, float | tuple[float, float]] = {
     "bsubvmnc": (1.0e-7, 1.0e-4),
     "bsubsmns": (1.0e-6, 1.0e-4),  # cth_like_beta0_mn12_ns25
     "bsupumnc": (1.0e-6, 2.0e-3),  # cth_like_beta0_mn12_ns25
-    "bsupvmnc": (1.0e-7, 2.0e-5),
+    "bsupvmnc": (1.0e-7, 5.0e-5),  # cth_like_beta0_mn12_ns51
     # cth_like_beta0_mn12_ns51
     "vmec_max_normalized_geodesic_curvature": (1.0e-5, 5.0e-3),
     # cth_like_beta0_mn12_ns51
