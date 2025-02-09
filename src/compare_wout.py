@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: 2025-present Proxima Fusion GmbH <info@proximafusion.com>
 #
 # SPDX-License-Identifier: MIT
-#!/usr/bin/env python
 #
 # Utilities to compare contents of two wout files. Can also be used as a script:
 # python compare_wout.py wout_CONFIG.vmecpp.nc wout_CONFIG.nc
