@@ -107,7 +107,9 @@ source venv/bin/activate
 
 Run the validation:
 ```
-python -m validate_vmec
+env OMP_NUM_THREADS=1 python validate_vmec.py
 ```
+
+`OMP_NUM_THREADS=1` guarantees that VMEC++ uses only one core like Fortran VMEC does.
 
 Results will be saved in the current working durectory, in a subdirectory with the prefix `vnvresults`.
