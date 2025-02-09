@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: 2025-present Proxima Fusion GmbH <info@proximafusion.com>
 #
 # SPDX-License-Identifier: MIT
-# /usr/bin/env python
 #
 # The driver for Proxima's VMEC++ Verification and Validation (V&V) procedure.
 # Get usage information for this program by running `python validate_vmec.py --help`.
