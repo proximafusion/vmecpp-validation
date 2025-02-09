@@ -1,14 +1,50 @@
 # VMEC++ Validation
 
-## About the project
-
 This project serves to validate [VMEC++](https://github.com/proximafusion/vmecpp), a Python-friendly, from-scratch reimplementation in C++ of the Variational Moments Equilibrium Code (VMEC), a free-boundary ideal-MHD equilibrium solver for stellarators and tokamaks against a reference VMEC implementation.
 
 We compare the contents of the "wout" file, VMEC's standard output format, ensuring the values produced by VMEC++ match those of the reference implementation within test tolerances. 
 
 Please report any issues at https://github.com/proximafusion/vmecpp.
 
-### Reference implementation
+## Usage
+
+Instructions are for Linux systems, tested on Ubuntu 22.04 with Python 3.10.
+
+### Install pre-requisites
+
+```shell
+sudo apt install python3-venv git-lfs
+
+# VMEC++ pre-requisites:
+sudo apt-get install build-essential cmake libnetcdf-dev liblapacke-dev libopenmpi-dev libeigen3-dev nlohmann-json3-dev libhdf5-dev
+```
+
+### Set up virtual environment
+
+```shell
+git clone https://github.com/proximafusion/vmecpp-validation.git
+cd vmecpp-validation
+python -m venv venv
+source venv/bin/activate  # or equivalent for other shells than bash
+pip install -r requirements.txt
+```
+
+## Run the validation
+
+```shell
+# activate virtual environment
+source venv/bin/activate
+
+env OMP_NUM_THREADS=1 python validate_vmec.py
+```
+
+`OMP_NUM_THREADS=1` guarantees that VMEC++ uses only one core like Fortran VMEC does.
+
+Results will be saved in the current working durectory, in a subdirectory with the prefix `vnvresults`.
+
+## About the project
+
+### Reference VMEC implementation
 The reference implementation we compare against is Serial VMEC 8.52 from tag `v251` of [https://github.com/PrincetonUniversity/STELLOPT](https://github.com/PrincetonUniversity/STELLOPT) (sub-directory VMEC2000) with the following patches specified below for direct comparison with standalone VMEC++:
 * `lnyquist` must be set to `.TRUE.` in `wrout.f`
 * Parameter ordering when calling `analysum2` and `analysum2_par` must be fixed
@@ -70,46 +106,3 @@ Unless specified otherwise, quantities are checked against the IsCloseRelAbs met
 Unless explicitly specified in this document, our implementation acts as the specification in regards to what exact tolerances are used for each quantity: see `src/tolerances.py`.
 
 As a rule of thumb, deviations from the Reference should be smaller than 1e-6 in the IsCloseRelAbs metric.
-
-## Getting started
-
-Installation and usage instructions are for Linux systems, tested on Ubuntu 22.04.
-
-### Pre-requisites:
-* python with venv, tested with python3.10
-```
-sudo apt install python3-venv
-```
-* system packages required by vmecpp, e.g.
-```
-sudo apt-get install build-essential cmake libnetcdf-dev liblapacke-dev libopenmpi-dev libeigen3-dev nlohmann-json3-dev libhdf5-dev
-```
-* [git-lfs](https://git-lfs.com/), when working with free-boundary scenarios (currently w7x, ncsx and cth_like)
-
-### Installation
-
-1. Clone the repo
-2. Set up python virtual environment:
-```
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-And you are good to go!
-
-## Usage
-
-If needed, activate your virtual environment:
-```
-source venv/bin/activate
-```
-
-Run the validation:
-```
-env OMP_NUM_THREADS=1 python validate_vmec.py
-```
-
-`OMP_NUM_THREADS=1` guarantees that VMEC++ uses only one core like Fortran VMEC does.
-
-Results will be saved in the current working durectory, in a subdirectory with the prefix `vnvresults`.
