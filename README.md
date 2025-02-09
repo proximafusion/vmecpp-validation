@@ -29,7 +29,7 @@ source venv/bin/activate  # or equivalent for other shells than bash
 pip install -r requirements.txt
 ```
 
-## Run the validation
+### Run the validation
 
 ```shell
 # activate virtual environment
