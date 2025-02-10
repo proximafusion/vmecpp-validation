@@ -1,5 +1,7 @@
 # VMEC++ Validation
 
+[![Run short version of VMEC++ validation](https://github.com/proximafusion/vmecpp-validation/actions/workflows/short_validation.yaml/badge.svg?branch=main)](https://github.com/proximafusion/vmecpp-validation/actions/workflows/short_validation.yaml)
+
 This project serves to validate [VMEC++](https://github.com/proximafusion/vmecpp), a Python-friendly, from-scratch reimplementation in C++ of the Variational Moments Equilibrium Code (VMEC), a free-boundary ideal-MHD equilibrium solver for stellarators and tokamaks against a reference VMEC implementation.
 
 We compare the contents of the "wout" file, VMEC's standard output format, ensuring the values produced by VMEC++ match those of the reference implementation within test tolerances. 
