@@ -18,7 +18,7 @@ Instructions are for Linux systems, tested on Ubuntu 22.04 with Python 3.10.
 sudo apt install python3-venv git-lfs
 
 # VMEC++ pre-requisites:
-sudo apt-get install build-essential cmake libnetcdf-dev liblapacke-dev libopenmpi-dev libeigen3-dev nlohmann-json3-dev libhdf5-dev
+sudo apt-get install build-essential cmake libnetcdf-dev liblapacke-dev libopenmpi-dev
 ```
 
 ### Set up virtual environment
