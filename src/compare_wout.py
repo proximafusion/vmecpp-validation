@@ -421,6 +421,14 @@ def compare_wout(
 
         val = vmecpp_ds[varname][:]
         ref = reference_ds[varname][:]
+        if varname == "chipf":
+            # VMEC++ extrapolates the boundary chipf like iotaf, following
+            # PARVMEC's add_fluxes.f90, while the references keep the 8.52 rule
+            # 2*chips(ns) - chips(ns1). Check that point against the definition
+            # chipf = iotaf * phipf, which is exact because phipf is constant
+            # without aphi.
+            ref = np.asarray(ref).copy()
+            ref[-1] = vmecpp_ds["iotaf"][-1] * vmecpp_ds["phipf"][-1]
         s = check_contents(val, ref, tol, varname)
         if s is Status.MISMATCH:
             overall_status = Status.MISMATCH
