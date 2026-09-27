@@ -369,11 +369,34 @@ def run_vmecpp(conf_and_wout: tuple[Path, Path]) -> tuple[Path, str, float]:
     out = StringIO()
     with contextlib.redirect_stdout(out):
         indata = vmecpp.VmecInput.from_file(conf)
+        warm_up_time = warm_up_vmecpp(indata)
         start_time = time.time()
         output_quantities = vmecpp.run(indata, max_threads=1)
         runtime = time.time() - start_time
         output_quantities.wout.save(wout)
+        print(f"Untimed warm-up run: {warm_up_time:.2f} s")
     return conf, out.getvalue(), runtime
+
+
+def warm_up_vmecpp(indata: vmecpp.VmecInput) -> float:
+    """Run one iteration at the final resolution of indata, and return its runtime.
+
+    The first vmecpp.run of a process at a given resolution compiles the JAX output
+    stage (about a second), a one-off cost the comparison with the reference's solve
+    time should not include. The compilation depends only on the grid sizes, so one
+    iteration at the final radial resolution triggers it.
+    """
+    warm_up_input = indata.model_copy(
+        update={
+            "ns_array": np.asarray(indata.ns_array)[-1:],
+            "ftol_array": np.asarray(indata.ftol_array)[-1:],
+            "niter_array": np.asarray([1]),
+            "return_outputs_even_if_not_converged": True,
+        }
+    )
+    start_time = time.time()
+    vmecpp.run(warm_up_input, max_threads=1, verbose=False)
+    return time.time() - start_time
 
 
 def make_vmecpp_wouts(
