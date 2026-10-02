@@ -429,6 +429,11 @@ def compare_wout(
             # without aphi.
             ref = np.asarray(ref).copy()
             ref[-1] = vmecpp_ds["iotaf"][-1] * vmecpp_ds["phipf"][-1]
+        if varname == "bsubsmns":
+            # VMEC++ writes the full-grid B_s of PARVMEC; the references hold the
+            # 8.52 half-grid B_s, averaged here to the interior full-grid surfaces.
+            val = val[1:-1]
+            ref = 0.5 * (ref[1:-1] + ref[2:])
         s = check_contents(val, ref, tol, varname)
         if s is Status.MISMATCH:
             overall_status = Status.MISMATCH
