@@ -368,7 +368,12 @@ def run_vmecpp(conf_and_wout: tuple[Path, Path]) -> tuple[Path, str, float]:
     conf, wout = conf_and_wout
     out = StringIO()
     with contextlib.redirect_stdout(out):
-        indata = vmecpp.VmecInput.from_file(conf)
+        # The references come from VMEC 8.52 / PARVMEC with the diagonal lambda
+        # preconditioner. VMEC++'s default checkerboard floor converges along a
+        # different path and misses the 1e-12 scalar tolerances.
+        indata = vmecpp.VmecInput.from_file(conf).model_copy(
+            update={"lambda_precondition_checkerboard_terms": -1.0}
+        )
         warm_up_time = warm_up_vmecpp(indata)
         start_time = time.time()
         output_quantities = vmecpp.run(indata, max_threads=1)
